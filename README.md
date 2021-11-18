@@ -12,6 +12,7 @@ With gRPC you can choose between four different communication patterns. Unary wh
 ###### Useful Links
 - [Basic server/client setups for all types](https://grpc.io/docs/languages/go/basics/)
 - [Google protobuf docs](https://developers.google.com/protocol-buffers/docs/overview)
+- [Grpc documentation](https://pkg.go.dev/google.golang.org/grpc#Server)
 - [Case study using gRPC streams](https://ably.com/blog/grpc-stream-performance)
 
 ##### Unary {#unary-type}
@@ -107,7 +108,7 @@ For the stream server I've set up a client as well as a server for the Name Serv
 
 Most of the complexity of the stream function is taken care of by the proto compiler for go. We just get to use this stream server given to the GetNames method by the ```nameservice``` package. 
 
-The client calling the stream request gets a stream client that the response messages can be harvested from till we got the go idiomatic ```io.EOF`` error telling us we've reached the end.
+The client calling the stream request gets a stream client that the response messages can be harvested from till we got the go idiomatic ```io.EOF``` error telling us we've reached the end.
 
 I'll open a terminal and ```cd``` into the stream server server directory, and start the server ```go run main.go```.
 
