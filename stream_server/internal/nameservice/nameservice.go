@@ -11,26 +11,53 @@ import (
 )
 
 type NameService struct {
-	Log *logrus.Logger
 	namesservice.UnimplementedNamesServiceServer
+	Log *logrus.Logger
 }
 
-func (ns *NameService) GetNames(req *namesservice.GetNamesRequest, stream namesservice.NamesService_GetNamesServer) error {
-
+func (n *NameService) GetNames(req *namesservice.GetNamesRequest, stream namesservice.NamesService_GetNamesServer) error {
 	s := rand.NewSource(time.Now().UnixNano())
 	rndm := rand.New(s)
 	numNames := rndm.Intn(100)
 
-	ns.Log.Infoln("Sending Names")
-	for i := 0; i <= numNames; i++ {
-		n := fmt.Sprintf("%s %s", faker.FirstName(), faker.LastName())
-		err := stream.Send(&namesservice.GetNamesResponse{
-			Name: n,
-		})
+	names := []string{}
+	for i := 0; i < numNames; i++ {
+		names = append(names, fmt.Sprintf("%s %s", faker.FirstName(), faker.LastName()))
+	}
 
+	for _, n := range names {
+		gnr := namesservice.GetNamesResponse{
+			Name: n,
+		}
+		err := stream.Send(&gnr)
 		if err != nil {
-			ns.Log.Errorf("failed to send name %s", n)
+			return err
 		}
 	}
 	return nil
 }
+
+// type NameService struct {
+// 	Log *logrus.Logger
+// 	namesservice.UnimplementedNamesServiceServer
+// }
+
+// func (ns *NameService) GetNames(req *namesservice.GetNamesRequest, stream namesservice.NamesService_GetNamesServer) error {
+
+// 	s := rand.NewSource(time.Now().UnixNano())
+// 	rndm := rand.New(s)
+// 	numNames := rndm.Intn(100)
+
+// 	ns.Log.Infoln("Sending Names")
+// 	for i := 0; i <= numNames; i++ {
+// 		n := fmt.Sprintf("%s %s", faker.FirstName(), faker.LastName())
+// 		err := stream.Send(&namesservice.GetNamesResponse{
+// 			Name: n,
+// 		})
+
+// 		if err != nil {
+// 			ns.Log.Errorf("failed to send name %s", n)
+// 		}
+// 	}
+// 	return nil
+// }
