@@ -12,6 +12,7 @@ With gRPC you can choose between four different communication patterns. Unary wh
 ###### Useful Links
 - [Basic server/client setups for all types](https://grpc.io/docs/languages/go/basics/)
 - [Google protobuf docs](https://developers.google.com/protocol-buffers/docs/overview)
+- [Grpc documentation](https://pkg.go.dev/google.golang.org/grpc#Server)
 - [Case study using gRPC streams](https://ably.com/blog/grpc-stream-performance)
 
 ##### Unary {#unary-type}
